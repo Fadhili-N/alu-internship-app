@@ -6,6 +6,15 @@ import 'firebase_options.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/auth/register_screen.dart';
 import 'screens/auth/startup_pending_screen.dart';
+import 'screens/student/student_home_screen.dart';
+import 'screens/student/opportunity_detail_screen.dart';
+import 'screens/student/apply_screen.dart';
+import 'screens/student/my_applications_screen.dart';
+import 'screens/startup/startup_home_screen.dart';
+import 'screens/startup/create_opportunity_screen.dart';
+import 'screens/startup/applicants_screen.dart';
+import 'screens/admin/admin_home_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -32,6 +41,39 @@ class MyApp extends ConsumerWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/startup-pending': (context) => const StartupPendingScreen(),
+        '/student-home': (context) => const StudentHomeScreen(),
+        '/my-applications': (context) => const MyApplicationsScreen(),
+        '/startup-home': (context) => const StartupHomeScreen(),
+        '/admin-home': (context) => const AdminHomeScreen(),
+        '/opportunity-detail': (context) {
+          final id =
+              ModalRoute.of(context)!.settings.arguments as String;
+          return OpportunityDetailScreen(opportunityId: id);
+        },
+        '/apply': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return ApplyScreen(
+            opportunityId: args['opportunityId'],
+            startupId: args['startupId'],
+            opportunityTitle: args['opportunityTitle'],
+            studentUid: args['studentUid'],
+            studentName: args['studentName'],
+          );
+        },
+        '/create-opportunity': (context) {
+          final args = ModalRoute.of(context)!.settings.arguments
+              as Map<String, dynamic>;
+          return CreateOpportunityScreen(
+            startupId: args['startupId'],
+            startupName: args['startupName'],
+          );
+        },
+        '/applicants': (context) {
+          final id =
+              ModalRoute.of(context)!.settings.arguments as String;
+          return ApplicantsScreen(opportunityId: id);
+        },
       },
     );
   }
