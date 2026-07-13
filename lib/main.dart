@@ -10,6 +10,7 @@ import 'screens/student/student_home_screen.dart';
 import 'screens/student/opportunity_detail_screen.dart';
 import 'screens/student/apply_screen.dart';
 import 'screens/student/my_applications_screen.dart';
+import 'screens/student/student_profile_screen.dart';
 import 'screens/startup/startup_home_screen.dart';
 import 'screens/startup/create_opportunity_screen.dart';
 import 'screens/startup/applicants_screen.dart';
@@ -43,6 +44,7 @@ class MyApp extends ConsumerWidget {
         '/startup-pending': (context) => const StartupPendingScreen(),
         '/student-home': (context) => const StudentHomeScreen(),
         '/my-applications': (context) => const MyApplicationsScreen(),
+        '/student-profile': (context) => const StudentProfileScreen(),
         '/startup-home': (context) => const StartupHomeScreen(),
         '/admin-home': (context) => const AdminHomeScreen(),
         '/opportunity-detail': (context) {
@@ -56,6 +58,7 @@ class MyApp extends ConsumerWidget {
           return ApplyScreen(
             opportunityId: args['opportunityId'],
             startupId: args['startupId'],
+            startupAdminUid: args['startupAdminUid'],
             opportunityTitle: args['opportunityTitle'],
             studentUid: args['studentUid'],
             studentName: args['studentName'],

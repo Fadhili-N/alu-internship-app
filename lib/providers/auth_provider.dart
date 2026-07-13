@@ -85,6 +85,25 @@ class AuthNotifier extends StateNotifier<String?> {
     state = null;
     await _authService.signOut();
   }
+
+  // UPDATE PROFILE — saves skill tags and bio from the student profile screen
+  Future<bool> updateProfile({
+    required String uid,
+    required List<String> skillTags,
+    required String bio,
+  }) async {
+    state = null;
+    try {
+      await _authService.updateUserProfile(
+        uid: uid,
+        data: {'skillTags': skillTags, 'bio': bio},
+      );
+      return true;
+    } catch (e) {
+      state = e.toString();
+      return false;
+    }
+  }
 }
 
 // The provider that exposes AuthNotifier to the UI
