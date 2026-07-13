@@ -82,6 +82,24 @@ class AuthService {
     await _auth.signOut();
   }
 
+  // PASSWORD RESET — sends a reset link to the given email
+  Future<void> sendPasswordReset(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw _handleAuthException(e);
+    }
+  }
+
+  // Updates fields on the current user's Firestore document
+  // Used by the student profile screen to save skill tags and bio
+  Future<void> updateUserProfile({
+    required String uid,
+    required Map<String, dynamic> data,
+  }) async {
+    await _firestore.collection('users').doc(uid).update(data);
+  }
+
   // Fetches a single user document from Firestore by UID
   Future<UserModel?> getUserById(String uid) async {
     final doc = await _firestore.collection('users').doc(uid).get();
@@ -96,7 +114,8 @@ class AuthService {
       case 'user-not-found':
         return 'No account found with this email.';
       case 'wrong-password':
-        return 'Incorrect password.';
+      case 'invalid-credential':
+        return 'Incorrect email or password.';
       case 'email-already-in-use':
         return 'An account with this email already exists.';
       case 'weak-password':

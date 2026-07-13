@@ -41,7 +41,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     if (success) {
       final user = await ref.read(authServiceProvider).getUserById(
-            ref.read(authStateProvider).value!.uid,
+            ref.read(authServiceProvider).currentUser!.uid,
           );
 
       if (!mounted) return;
@@ -72,6 +72,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         );
       }
+    }
+  }
+
+  Future<void> _resetPassword() async {
+    final email = _emailController.text.trim();
+    if (Validators.validateEmail(email) != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter your email above first.')),
+      );
+      return;
+    }
+    try {
+      await ref.read(authServiceProvider).sendPasswordReset(email);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Password reset email sent.')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString()), backgroundColor: AppTheme.errorRed),
+      );
     }
   }
 
@@ -168,7 +190,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       : const Text(AppStrings.login),
                 ),
 
-                const SizedBox(height: 24),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: _resetPassword,
+                    child: Text(
+                      'Forgot password?',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: AppTheme.primaryRed,
+                            fontWeight: FontWeight.w600,
+                          ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 8),
 
                 Center(
                   child: Row(
