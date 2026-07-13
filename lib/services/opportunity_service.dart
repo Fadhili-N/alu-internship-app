@@ -10,6 +10,7 @@ class OpportunityService {
   Future<OpportunityModel> createOpportunity({
     required String startupId,
     required String startupName,
+    required String startupAdminUid,
     required String title,
     required String description,
     required List<String> requiredSkillTags,
@@ -24,6 +25,7 @@ class OpportunityService {
         id: docRef.id,
         startupId: startupId,
         startupName: startupName,
+        startupAdminUid: startupAdminUid,
         title: title,
         description: description,
         requiredSkillTags: requiredSkillTags,

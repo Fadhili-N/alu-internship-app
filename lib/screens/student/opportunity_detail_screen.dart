@@ -164,6 +164,7 @@ class OpportunityDetailScreen extends ConsumerWidget {
                   arguments: {
                     'opportunityId': opportunity.id,
                     'startupId': opportunity.startupId,
+                    'startupAdminUid': opportunity.startupAdminUid,
                     'opportunityTitle': opportunity.title,
                     'studentUid': user?.uid ?? '',
                     'studentName': user?.displayName ?? '',

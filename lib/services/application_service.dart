@@ -8,6 +8,7 @@ class ApplicationService {
   Future<ApplicationModel> createApplication({
     required String opportunityId,
     required String startupId,
+    required String startupAdminUid,
     required String studentUid,
     required String studentName,
     required String coverNote,
@@ -31,6 +32,7 @@ class ApplicationService {
         id: docRef.id,
         opportunityId: opportunityId,
         startupId: startupId,
+        startupAdminUid: startupAdminUid,
         studentUid: studentUid,
         studentName: studentName,
         coverNote: coverNote,

@@ -2,6 +2,7 @@ class OpportunityModel {
   final String id;
   final String startupId;
   final String startupName; // denormalized to avoid extra Firestore reads
+  final String startupAdminUid; // denormalized so security rules can check ownership directly
   final String title;
   final String description;
   final List<String> requiredSkillTags;
@@ -15,6 +16,7 @@ class OpportunityModel {
     required this.id,
     required this.startupId,
     required this.startupName,
+    required this.startupAdminUid,
     required this.title,
     required this.description,
     this.requiredSkillTags = const [],
@@ -30,6 +32,7 @@ class OpportunityModel {
       id: docId,
       startupId: map['startupId'] ?? '',
       startupName: map['startupName'] ?? '',
+      startupAdminUid: map['startupAdminUid'] ?? '',
       title: map['title'] ?? '',
       description: map['description'] ?? '',
       requiredSkillTags: List<String>.from(map['requiredSkillTags'] ?? []),
@@ -45,6 +48,7 @@ class OpportunityModel {
     return {
       'startupId': startupId,
       'startupName': startupName,
+      'startupAdminUid': startupAdminUid,
       'title': title,
       'description': description,
       'requiredSkillTags': requiredSkillTags,
@@ -69,6 +73,7 @@ class OpportunityModel {
       id: id,
       startupId: startupId,
       startupName: startupName,
+      startupAdminUid: startupAdminUid,
       title: title ?? this.title,
       description: description ?? this.description,
       requiredSkillTags: requiredSkillTags ?? this.requiredSkillTags,

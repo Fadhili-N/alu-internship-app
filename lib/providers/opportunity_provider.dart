@@ -56,6 +56,7 @@ class OpportunityNotifier extends StateNotifier<String?> {
   Future<bool> createOpportunity({
     required String startupId,
     required String startupName,
+    required String startupAdminUid,
     required String title,
     required String description,
     required List<String> requiredSkillTags,
@@ -68,6 +69,7 @@ class OpportunityNotifier extends StateNotifier<String?> {
       await _opportunityService.createOpportunity(
         startupId: startupId,
         startupName: startupName,
+        startupAdminUid: startupAdminUid,
         title: title,
         description: description,
         requiredSkillTags: requiredSkillTags,

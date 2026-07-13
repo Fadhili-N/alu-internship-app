@@ -2,6 +2,7 @@ class ApplicationModel {
   final String id;
   final String opportunityId;
   final String startupId;
+  final String startupAdminUid; // denormalized so security rules can check ownership directly
   final String studentUid;
   final String studentName; // denormalized to avoid extra Firestore reads
   final String coverNote;
@@ -13,6 +14,7 @@ class ApplicationModel {
     required this.id,
     required this.opportunityId,
     required this.startupId,
+    required this.startupAdminUid,
     required this.studentUid,
     required this.studentName,
     required this.coverNote,
@@ -26,6 +28,7 @@ class ApplicationModel {
       id: docId,
       opportunityId: map['opportunityId'] ?? '',
       startupId: map['startupId'] ?? '',
+      startupAdminUid: map['startupAdminUid'] ?? '',
       studentUid: map['studentUid'] ?? '',
       studentName: map['studentName'] ?? '',
       coverNote: map['coverNote'] ?? '',
@@ -39,6 +42,7 @@ class ApplicationModel {
     return {
       'opportunityId': opportunityId,
       'startupId': startupId,
+      'startupAdminUid': startupAdminUid,
       'studentUid': studentUid,
       'studentName': studentName,
       'coverNote': coverNote,
@@ -56,6 +60,7 @@ class ApplicationModel {
       id: id,
       opportunityId: opportunityId,
       startupId: startupId,
+      startupAdminUid: startupAdminUid,
       studentUid: studentUid,
       studentName: studentName,
       coverNote: coverNote,

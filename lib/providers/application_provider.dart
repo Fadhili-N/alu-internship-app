@@ -68,6 +68,7 @@ class ApplicationNotifier extends StateNotifier<String?> {
   Future<bool> submitApplication({
     required String opportunityId,
     required String startupId,
+    required String startupAdminUid,
     required String studentUid,
     required String studentName,
     required String coverNote,
@@ -77,6 +78,7 @@ class ApplicationNotifier extends StateNotifier<String?> {
       await _applicationService.createApplication(
         opportunityId: opportunityId,
         startupId: startupId,
+        startupAdminUid: startupAdminUid,
         studentUid: studentUid,
         studentName: studentName,
         coverNote: coverNote,

@@ -7,6 +7,7 @@ import '../../providers/application_provider.dart';
 class ApplyScreen extends ConsumerStatefulWidget {
   final String opportunityId;
   final String startupId;
+  final String startupAdminUid;
   final String opportunityTitle;
   final String studentUid;
   final String studentName;
@@ -15,6 +16,7 @@ class ApplyScreen extends ConsumerStatefulWidget {
     super.key,
     required this.opportunityId,
     required this.startupId,
+    required this.startupAdminUid,
     required this.opportunityTitle,
     required this.studentUid,
     required this.studentName,
@@ -44,6 +46,7 @@ class _ApplyScreenState extends ConsumerState<ApplyScreen> {
         await ref.read(applicationNotifierProvider.notifier).submitApplication(
               opportunityId: widget.opportunityId,
               startupId: widget.startupId,
+              startupAdminUid: widget.startupAdminUid,
               studentUid: widget.studentUid,
               studentName: widget.studentName,
               coverNote: _coverNoteController.text.trim(),

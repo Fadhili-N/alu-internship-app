@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/validators.dart';
+import '../../providers/auth_provider.dart';
 import '../../providers/opportunity_provider.dart';
 
 class CreateOpportunityScreen extends ConsumerStatefulWidget {
@@ -71,11 +72,14 @@ class _CreateOpportunityScreenState
 
     setState(() => _isLoading = true);
 
+    final adminUid = ref.read(currentUserProvider).value?.uid ?? '';
+
     final success = await ref
         .read(opportunityNotifierProvider.notifier)
         .createOpportunity(
           startupId: widget.startupId,
           startupName: widget.startupName,
+          startupAdminUid: adminUid,
           title: _titleController.text.trim(),
           description: _descriptionController.text.trim(),
           requiredSkillTags: _skillTags,
