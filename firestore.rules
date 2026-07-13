@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // READS: any signed-in ALU user can read.
+    // WRITES: locked to the owner. Writes are single-document, so these
+    // ownership checks are safe and never break list queries.
+
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth.uid == userId;
+      allow update: if request.auth.uid == userId &&
+        request.resource.data.role == resource.data.role;
+    }
+
+    match /startups/{startupId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null &&
+        request.resource.data.adminUid == request.auth.uid;
+      allow update: if request.auth != null && (
+        (resource.data.adminUid == request.auth.uid &&
+         request.resource.data.verificationStatus == resource.data.verificationStatus) ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'ventures_lab_admin'
+      );
+    }
+
+    match /opportunities/{opportunityId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null &&
+        request.resource.data.startupAdminUid == request.auth.uid;
+      allow update, delete: if request.auth != null &&
+        resource.data.startupAdminUid == request.auth.uid;
+    }
+
+    match /applications/{applicationId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null &&
+        request.resource.data.studentUid == request.auth.uid;
+      allow update: if request.auth != null &&
+        resource.data.startupAdminUid == request.auth.uid;
+      allow delete: if request.auth != null &&
+        resource.data.studentUid == request.auth.uid;
+    }
+  }
+}
